@@ -86,6 +86,23 @@ function App() {
         >
           削除
         </button>
+        <button
+  onClick={() => speak(inputText)}
+  disabled={!inputText}
+  style={{
+    height: "100%",
+    padding: "0 1.5rem",
+    fontSize: "1.8rem",
+    fontWeight: "bold",
+    border: "2px solid #000",
+    borderRadius: "8px",
+    cursor: inputText ? "pointer" : "not-allowed",
+    backgroundColor: inputText ? "#fff" : "#eee",
+    color: inputText ? "#000" : "#888",
+  }}
+>
+  再生
+</button>
       </div>
 
       {/* 五十音表 */}
