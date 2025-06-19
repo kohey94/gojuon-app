@@ -1,19 +1,18 @@
-import React from "react";
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 const gojuon = [
   ["あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ", "ん"],
-  ["い", "き", "し", "ち", "に", "ひ", "み", "",   "り", "",   ""],
-  ["う", "く", "す", "つ", "ぬ", "ふ", "む", "ゆ", "る", "",   ""],
-  ["え", "け", "せ", "て", "ね", "へ", "め", "",   "れ", "",   ""],
-  ["お", "こ", "そ", "と", "の", "ほ", "も", "よ", "ろ", "を", ""]
+  ["い", "き", "し", "ち", "に", "ひ", "み", "", "り", "", ""],
+  ["う", "く", "す", "つ", "ぬ", "ふ", "む", "ゆ", "る", "", ""],
+  ["え", "け", "せ", "て", "ね", "へ", "め", "", "れ", "", ""],
+  ["お", "こ", "そ", "と", "の", "ほ", "も", "よ", "ろ", "を", ""],
 ];
-
 
 // 行列を転置する関数
 const transpose = (matrix) => {
   return matrix[0].map((_, colIndex) =>
-    matrix.map(row => row[colIndex] || "")
+    matrix.map((row) => row[colIndex] || ""),
   );
 };
 
@@ -25,6 +24,7 @@ const speak = (text) => {
 };
 
 function App() {
+  const [inputText, setInputText] = useState("");
   const transposed = transpose(gojuon).reverse();
 
   return (
@@ -35,13 +35,32 @@ function App() {
         padding: "1rem",
         fontFamily: "sans-serif",
         boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
+      {/* 入力文字列表示エリア */}
+      <div
+        style={{
+          fontSize: "2.5rem",
+          fontWeight: "bold",
+          textAlign: "center",
+          padding: "0.5rem",
+          minHeight: "3rem",
+          border: "2px solid #000", // 枠線
+          borderRadius: "8px", // 少し丸めると見た目が柔らかくなる
+          marginBottom: "1rem", // 下に余白も加えておくとスッキリする
+        }}
+      >
+        {inputText}
+      </div>
+
+      {/* 五十音表 */}
       <div
         style={{
           display: "flex",
-          height: "100%",
-          gap: "0.5rem", // 横の間隔
+          flex: 1,
+          gap: "0.5rem",
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -53,7 +72,7 @@ function App() {
               display: "flex",
               flexDirection: "column",
               flex: 1,
-              gap: "0.5rem", // 縦の間隔
+              gap: "0.5rem",
               alignItems: "center",
             }}
           >
@@ -61,11 +80,14 @@ function App() {
               <button
                 key={rowIndex}
                 disabled={!char}
-                onClick={() => speak(char)}
+                onClick={() => {
+                  setInputText((prev) => prev + char);
+                  speak(char);
+                }}
                 style={{
                   width: "100%",
                   aspectRatio: "1 / 1",
-                  fontSize: "clamp(1.5rem, 5vw, 8vh)", // ← ボタンサイズに合わせる
+                  fontSize: "clamp(1.5rem, 5vw, 8vh)",
                   fontWeight: "bold",
                   backgroundColor: char ? "#f0f0f0" : "transparent",
                   border: char ? "1px solid #ccc" : "none",
@@ -77,7 +99,7 @@ function App() {
                 }}
               >
                 {char}
-            </button>
+              </button>
             ))}
           </div>
         ))}
@@ -85,6 +107,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
