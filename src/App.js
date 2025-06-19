@@ -42,17 +42,50 @@ function App() {
       {/* 入力文字列表示エリア */}
       <div
         style={{
-          fontSize: "2.5rem",
-          fontWeight: "bold",
-          textAlign: "center",
-          padding: "0.5rem",
-          minHeight: "3rem",
-          border: "2px solid #000", // 枠線
-          borderRadius: "8px", // 少し丸めると見た目が柔らかくなる
-          marginBottom: "1rem", // 下に余白も加えておくとスッキリする
+          display: "flex",
+          alignItems: "stretch", // ← 高さ自動一致
+          gap: "1rem",
+          marginBottom: "1rem",
+          justifyContent: "center",
         }}
       >
-        {inputText}
+        {/* 入力欄 */}
+        <div
+          style={{
+            flex: 1,
+            maxWidth: "80vw",
+            fontSize: "2.5rem",
+            fontWeight: "bold",
+            textAlign: "center",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            padding: "0.5rem",
+            minHeight: "4rem",
+            border: "2px solid #000",
+            borderRadius: "8px",
+            backgroundColor: "white",
+          }}
+        >
+          {inputText}
+        </div>
+
+        {/* 削除ボタン */}
+        <button
+          onClick={() => setInputText("")}
+          style={{
+            height: "100%", // ← stretchに追従
+            padding: "0 1.5rem",
+            fontSize: "1.8rem",
+            fontWeight: "bold",
+            border: "2px solid #000",
+            borderRadius: "8px",
+            cursor: "pointer",
+            backgroundColor: "#fff",
+          }}
+        >
+          削除
+        </button>
       </div>
 
       {/* 五十音表 */}
@@ -71,7 +104,7 @@ function App() {
             style={{
               display: "flex",
               flexDirection: "column",
-              flex: 1,
+              flex: "0 0 7vw",
               gap: "0.5rem",
               alignItems: "center",
             }}
@@ -87,7 +120,7 @@ function App() {
                 style={{
                   width: "100%",
                   aspectRatio: "1 / 1",
-                  fontSize: "clamp(1.5rem, 5vw, 8vh)",
+                  fontSize: "clamp(1rem, 3.5vw, 6vh)", // ← 調整
                   fontWeight: "bold",
                   backgroundColor: char ? "#f0f0f0" : "transparent",
                   border: char ? "1px solid #ccc" : "none",
