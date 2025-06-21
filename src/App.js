@@ -102,13 +102,15 @@ function App() {
     }
   };
 
-  const handleDeleteStart = () => {
+  const handleDeleteStart = (e) => {
+    e.preventDefault(); // ← これが重要
     pressTimer.current = setTimeout(() => {
       setInputText("");
     }, 600);
   };
 
-  const handleDeleteEnd = () => {
+  const handleDeleteEnd = (e) => {
+    e.preventDefault(); // ← 念のため
     clearTimeout(pressTimer.current);
   };
 
@@ -158,7 +160,11 @@ function App() {
           onMouseLeave={handleDeleteEnd}
           onTouchStart={handleDeleteStart}
           onTouchEnd={handleDeleteEnd}
-          onClick={() => setInputText((prev) => prev.slice(0, -1))}
+          onTouchCancel={handleDeleteEnd} // ← 念のため追加
+          onClick={(e) => {
+            e.preventDefault(); // ← モバイルの誤動作防止
+            setInputText((prev) => prev.slice(0, -1));
+          }}
           style={{
             height: "100%",
             padding: "0 1.5rem",
@@ -199,36 +205,7 @@ function App() {
           alignItems: "center",
         }}
       >
-        {/* 特殊列（記号） */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.5rem",
-            flex: "0 0 7vw",
-            alignItems: "center",
-          }}
-        >
-          {["！", "？", "、", "。"].map((symbol, i) => (
-            <button
-              key={i}
-              onClick={() => setInputText((prev) => prev + symbol)}
-              style={commonButtonStyle}
-            >
-              {symbol}
-            </button>
-          ))}
-          <button
-            disabled
-            style={{
-              ...commonButtonStyle,
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
-        </div>
-
-        {/* 特殊列（濁音など） */}
+        {/* 特殊列1（濁音など） */}
         <div
           style={{
             display: "flex",
@@ -262,6 +239,35 @@ function App() {
           >
             ー
           </button>
+          <button
+            disabled
+            style={{
+              ...commonButtonStyle,
+              backgroundColor: "transparent",
+              border: "none",
+            }}
+          />
+        </div>
+
+        {/* 特殊列2（記号） */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.5rem",
+            flex: "0 0 7vw",
+            alignItems: "center",
+          }}
+        >
+          {["！", "？", "、", "。"].map((symbol, i) => (
+            <button
+              key={i}
+              onClick={() => setInputText((prev) => prev + symbol)}
+              style={commonButtonStyle}
+            >
+              {symbol}
+            </button>
+          ))}
           <button
             disabled
             style={{
