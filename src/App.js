@@ -1,4 +1,4 @@
-mport React, { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./App.css";
 
 const gojuon = [
