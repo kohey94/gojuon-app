@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+mport React, { useState, useRef } from "react";
 import "./App.css";
 
 const gojuon = [
@@ -11,7 +11,7 @@ const gojuon = [
 
 const transpose = (matrix) => {
   return matrix[0].map((_, colIndex) =>
-    matrix.map((row) => row[colIndex] || ""),
+    matrix.map((row) => row[colIndex] || "")
   );
 };
 
@@ -48,47 +48,19 @@ function App() {
     const base = inputText.slice(0, -1);
 
     const dakutenMap = {
-      か: "が",
-      き: "ぎ",
-      く: "ぐ",
-      け: "げ",
-      こ: "ご",
-      さ: "ざ",
-      し: "じ",
-      す: "ず",
-      せ: "ぜ",
-      そ: "ぞ",
-      た: "だ",
-      ち: "ぢ",
-      つ: "づ",
-      て: "で",
-      と: "ど",
-      は: "ば",
-      ひ: "び",
-      ふ: "ぶ",
-      へ: "べ",
-      ほ: "ぼ",
+      か: "が", き: "ぎ", く: "ぐ", け: "げ", こ: "ご",
+      さ: "ざ", し: "じ", す: "ず", せ: "ぜ", そ: "ぞ",
+      た: "だ", ち: "ぢ", つ: "づ", て: "で", と: "ど",
+      は: "ば", ひ: "び", ふ: "ぶ", へ: "べ", ほ: "ぼ",
     };
 
     const handakutenMap = {
-      は: "ぱ",
-      ひ: "ぴ",
-      ふ: "ぷ",
-      へ: "ぺ",
-      ほ: "ぽ",
+      は: "ぱ", ひ: "ぴ", ふ: "ぷ", へ: "ぺ", ほ: "ぽ",
     };
 
     const smallMap = {
-      あ: "ぁ",
-      い: "ぃ",
-      う: "ぅ",
-      え: "ぇ",
-      お: "ぉ",
-      つ: "っ",
-      や: "ゃ",
-      ゆ: "ゅ",
-      よ: "ょ",
-      わ: "ゎ",
+      あ: "ぁ", い: "ぃ", う: "ぅ", え: "ぇ", お: "ぉ",
+      つ: "っ", や: "ゃ", ゆ: "ゅ", よ: "ょ", わ: "ゎ",
     };
 
     if (type === "dakuon" && dakutenMap[lastChar]) {
@@ -102,15 +74,13 @@ function App() {
     }
   };
 
-  const handleDeleteStart = (e) => {
-    e.preventDefault(); // ← これが重要
+  const handleDeleteStart = () => {
     pressTimer.current = setTimeout(() => {
       setInputText("");
     }, 600);
   };
 
-  const handleDeleteEnd = (e) => {
-    e.preventDefault(); // ← 念のため
+  const handleDeleteEnd = () => {
     clearTimeout(pressTimer.current);
   };
 
@@ -160,11 +130,7 @@ function App() {
           onMouseLeave={handleDeleteEnd}
           onTouchStart={handleDeleteStart}
           onTouchEnd={handleDeleteEnd}
-          onTouchCancel={handleDeleteEnd} // ← 念のため追加
-          onClick={(e) => {
-            e.preventDefault(); // ← モバイルの誤動作防止
-            setInputText((prev) => prev.slice(0, -1));
-          }}
+          onClick={() => setInputText((prev) => prev.slice(0, -1))}
           style={{
             height: "100%",
             padding: "0 1.5rem",
@@ -215,38 +181,11 @@ function App() {
             alignItems: "center",
           }}
         >
-          <button
-            onClick={() => handleSpecialInput("dakuon")}
-            style={commonButtonStyle}
-          >
-            ゛
-          </button>
-          <button
-            onClick={() => handleSpecialInput("handakuon")}
-            style={commonButtonStyle}
-          >
-            ゜
-          </button>
-          <button
-            onClick={() => handleSpecialInput("small")}
-            style={commonButtonStyle}
-          >
-            小
-          </button>
-          <button
-            onClick={() => handleSpecialInput("choon")}
-            style={commonButtonStyle}
-          >
-            ー
-          </button>
-          <button
-            disabled
-            style={{
-              ...commonButtonStyle,
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
+          <button onClick={() => handleSpecialInput("dakuon")} style={commonButtonStyle}>゛</button>
+          <button onClick={() => handleSpecialInput("handakuon")} style={commonButtonStyle}>゜</button>
+          <button onClick={() => handleSpecialInput("small")} style={commonButtonStyle}>小</button>
+          <button onClick={() => handleSpecialInput("choon")} style={commonButtonStyle}>ー</button>
+          <button disabled style={{ ...commonButtonStyle, backgroundColor: "transparent", border: "none" }} />
         </div>
 
         {/* 特殊列2（記号） */}
@@ -268,14 +207,7 @@ function App() {
               {symbol}
             </button>
           ))}
-          <button
-            disabled
-            style={{
-              ...commonButtonStyle,
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
+          <button disabled style={{ ...commonButtonStyle, backgroundColor: "transparent", border: "none" }} />
         </div>
 
         {/* 五十音列 */}
