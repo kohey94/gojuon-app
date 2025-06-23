@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 const gojuon = [
@@ -9,11 +9,8 @@ const gojuon = [
   ["お", "こ", "そ", "と", "の", "ほ", "も", "よ", "ろ", "を", ""],
 ];
 
-const transpose = (matrix) => {
-  return matrix[0].map((_, colIndex) =>
-    matrix.map((row) => row[colIndex] || "")
-  );
-};
+const transpose = (matrix) =>
+  matrix[0].map((_, colIndex) => matrix.map((row) => row[colIndex] || ""));
 
 const speak = (text) => {
   const utterance = new SpeechSynthesisUtterance(text);
@@ -38,7 +35,6 @@ const commonButtonStyle = {
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const pressTimer = useRef(null);
   const transposed = transpose(gojuon).reverse();
 
   const handleSpecialInput = (type) => {
@@ -48,19 +44,47 @@ function App() {
     const base = inputText.slice(0, -1);
 
     const dakutenMap = {
-      か: "が", き: "ぎ", く: "ぐ", け: "げ", こ: "ご",
-      さ: "ざ", し: "じ", す: "ず", せ: "ぜ", そ: "ぞ",
-      た: "だ", ち: "ぢ", つ: "づ", て: "で", と: "ど",
-      は: "ば", ひ: "び", ふ: "ぶ", へ: "べ", ほ: "ぼ",
+      か: "が",
+      き: "ぎ",
+      く: "ぐ",
+      け: "げ",
+      こ: "ご",
+      さ: "ざ",
+      し: "じ",
+      す: "ず",
+      せ: "ぜ",
+      そ: "ぞ",
+      た: "だ",
+      ち: "ぢ",
+      つ: "づ",
+      て: "で",
+      と: "ど",
+      は: "ば",
+      ひ: "び",
+      ふ: "ぶ",
+      へ: "べ",
+      ほ: "ぼ",
     };
 
     const handakutenMap = {
-      は: "ぱ", ひ: "ぴ", ふ: "ぷ", へ: "ぺ", ほ: "ぽ",
+      は: "ぱ",
+      ひ: "ぴ",
+      ふ: "ぷ",
+      へ: "ぺ",
+      ほ: "ぽ",
     };
 
     const smallMap = {
-      あ: "ぁ", い: "ぃ", う: "ぅ", え: "ぇ", お: "ぉ",
-      つ: "っ", や: "ゃ", ゆ: "ゅ", よ: "ょ", わ: "ゎ",
+      あ: "ぁ",
+      い: "ぃ",
+      う: "ぅ",
+      え: "ぇ",
+      お: "ぉ",
+      つ: "っ",
+      や: "ゃ",
+      ゆ: "ゅ",
+      よ: "ょ",
+      わ: "ゎ",
     };
 
     if (type === "dakuon" && dakutenMap[lastChar]) {
@@ -72,16 +96,6 @@ function App() {
     } else if (type === "choon") {
       setInputText((prev) => prev + "ー");
     }
-  };
-
-  const handleDeleteStart = () => {
-    pressTimer.current = setTimeout(() => {
-      setInputText("");
-    }, 600);
-  };
-
-  const handleDeleteEnd = () => {
-    clearTimeout(pressTimer.current);
   };
 
   return (
@@ -109,41 +123,61 @@ function App() {
           style={{
             flex: 1,
             maxWidth: "80vw",
-            fontSize: "2.5rem",
             fontWeight: "bold",
             textAlign: "center",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-            padding: "0.5rem",
-            minHeight: "4rem",
+            padding: "1rem",
+            minHeight: "8rem",
             border: "2px solid #000",
             borderRadius: "8px",
             backgroundColor: "white",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "6vw", // ここを変更
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
           }}
         >
           {inputText}
         </div>
-        <button
-          onMouseDown={handleDeleteStart}
-          onMouseUp={handleDeleteEnd}
-          onMouseLeave={handleDeleteEnd}
-          onTouchStart={handleDeleteStart}
-          onTouchEnd={handleDeleteEnd}
-          onClick={() => setInputText((prev) => prev.slice(0, -1))}
+        <div
           style={{
-            height: "100%",
-            padding: "0 1.5rem",
-            fontSize: "1.8rem",
-            fontWeight: "bold",
-            border: "2px solid #000",
-            borderRadius: "8px",
-            cursor: "pointer",
-            backgroundColor: "#fff",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            gap: "0.5rem",
           }}
         >
-          削除
-        </button>
+          <button
+            onClick={() => setInputText((prev) => prev.slice(0, -1))}
+            style={{
+              padding: "0.5rem 1.5rem",
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              border: "2px solid #000",
+              borderRadius: "8px",
+              cursor: "pointer",
+              backgroundColor: "#fff",
+            }}
+          >
+            削除
+          </button>
+          <button
+            onClick={() => setInputText("")}
+            style={{
+              padding: "0.5rem 1.5rem",
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              border: "2px solid #000",
+              borderRadius: "8px",
+              cursor: "pointer",
+              backgroundColor: "#fff",
+            }}
+          >
+            全削除
+          </button>
+        </div>
         <button
           onClick={() => speak(inputText)}
           style={{
@@ -181,11 +215,38 @@ function App() {
             alignItems: "center",
           }}
         >
-          <button onClick={() => handleSpecialInput("dakuon")} style={commonButtonStyle}>゛</button>
-          <button onClick={() => handleSpecialInput("handakuon")} style={commonButtonStyle}>゜</button>
-          <button onClick={() => handleSpecialInput("small")} style={commonButtonStyle}>小</button>
-          <button onClick={() => handleSpecialInput("choon")} style={commonButtonStyle}>ー</button>
-          <button disabled style={{ ...commonButtonStyle, backgroundColor: "transparent", border: "none" }} />
+          <button
+            onClick={() => handleSpecialInput("dakuon")}
+            style={commonButtonStyle}
+          >
+            ゛
+          </button>
+          <button
+            onClick={() => handleSpecialInput("handakuon")}
+            style={commonButtonStyle}
+          >
+            ゜
+          </button>
+          <button
+            onClick={() => handleSpecialInput("small")}
+            style={commonButtonStyle}
+          >
+            小
+          </button>
+          <button
+            onClick={() => handleSpecialInput("choon")}
+            style={commonButtonStyle}
+          >
+            ー
+          </button>
+          <button
+            disabled
+            style={{
+              ...commonButtonStyle,
+              backgroundColor: "transparent",
+              border: "none",
+            }}
+          />
         </div>
 
         {/* 特殊列2（記号） */}
@@ -207,7 +268,14 @@ function App() {
               {symbol}
             </button>
           ))}
-          <button disabled style={{ ...commonButtonStyle, backgroundColor: "transparent", border: "none" }} />
+          <button
+            disabled
+            style={{
+              ...commonButtonStyle,
+              backgroundColor: "transparent",
+              border: "none",
+            }}
+          />
         </div>
 
         {/* 五十音列 */}
