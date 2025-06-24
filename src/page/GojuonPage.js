@@ -44,47 +44,19 @@ function App() {
     const base = inputText.slice(0, -1);
 
     const dakutenMap = {
-      か: "が",
-      き: "ぎ",
-      く: "ぐ",
-      け: "げ",
-      こ: "ご",
-      さ: "ざ",
-      し: "じ",
-      す: "ず",
-      せ: "ぜ",
-      そ: "ぞ",
-      た: "だ",
-      ち: "ぢ",
-      つ: "づ",
-      て: "で",
-      と: "ど",
-      は: "ば",
-      ひ: "び",
-      ふ: "ぶ",
-      へ: "べ",
-      ほ: "ぼ",
+      か: "が", き: "ぎ", く: "ぐ", け: "げ", こ: "ご",
+      さ: "ざ", し: "じ", す: "ず", せ: "ぜ", そ: "ぞ",
+      た: "だ", ち: "ぢ", つ: "づ", て: "で", と: "ど",
+      は: "ば", ひ: "び", ふ: "ぶ", へ: "べ", ほ: "ぼ",
     };
 
     const handakutenMap = {
-      は: "ぱ",
-      ひ: "ぴ",
-      ふ: "ぷ",
-      へ: "ぺ",
-      ほ: "ぽ",
+      は: "ぱ", ひ: "ぴ", ふ: "ぷ", へ: "ぺ", ほ: "ぽ",
     };
 
     const smallMap = {
-      あ: "ぁ",
-      い: "ぃ",
-      う: "ぅ",
-      え: "ぇ",
-      お: "ぉ",
-      つ: "っ",
-      や: "ゃ",
-      ゆ: "ゅ",
-      よ: "ょ",
-      わ: "ゎ",
+      あ: "ぁ", い: "ぃ", う: "ぅ", え: "ぇ", お: "ぉ",
+      つ: "っ", や: "ゃ", ゆ: "ゅ", よ: "ょ", わ: "ゎ",
     };
 
     if (type === "dakuon" && dakutenMap[lastChar]) {
@@ -133,7 +105,7 @@ function App() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "6vw", // ここを変更
+            fontSize: "6vw",
             overflow: "hidden",
             whiteSpace: "nowrap",
             textOverflow: "ellipsis",
@@ -202,7 +174,7 @@ function App() {
           flex: 1,
           gap: "0.5rem",
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "stretch", // ここ修正
         }}
       >
         {/* 特殊列1（濁音など） */}
@@ -215,38 +187,11 @@ function App() {
             alignItems: "center",
           }}
         >
-          <button
-            onClick={() => handleSpecialInput("dakuon")}
-            style={commonButtonStyle}
-          >
-            ゛
-          </button>
-          <button
-            onClick={() => handleSpecialInput("handakuon")}
-            style={commonButtonStyle}
-          >
-            ゜
-          </button>
-          <button
-            onClick={() => handleSpecialInput("small")}
-            style={commonButtonStyle}
-          >
-            小
-          </button>
-          <button
-            onClick={() => handleSpecialInput("choon")}
-            style={commonButtonStyle}
-          >
-            ー
-          </button>
-          <button
-            disabled
-            style={{
-              ...commonButtonStyle,
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
+          <button onClick={() => handleSpecialInput("dakuon")} style={commonButtonStyle}>゛</button>
+          <button onClick={() => handleSpecialInput("handakuon")} style={commonButtonStyle}>゜</button>
+          <button onClick={() => handleSpecialInput("small")} style={commonButtonStyle}>小</button>
+          <button onClick={() => handleSpecialInput("choon")} style={commonButtonStyle}>ー</button>
+          <button disabled style={{ ...commonButtonStyle, backgroundColor: "transparent", border: "none" }} />
         </div>
 
         {/* 特殊列2（記号） */}
@@ -268,14 +213,7 @@ function App() {
               {symbol}
             </button>
           ))}
-          <button
-            disabled
-            style={{
-              ...commonButtonStyle,
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
+          <button disabled style={{ ...commonButtonStyle, backgroundColor: "transparent", border: "none" }} />
         </div>
 
         {/* 五十音列 */}
@@ -288,6 +226,7 @@ function App() {
               flex: "0 0 7vw",
               gap: "0.5rem",
               alignItems: "center",
+              height: "100%", // ここ追加
             }}
           >
             {column.map((char, rowIndex) => (
